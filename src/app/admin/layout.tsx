@@ -1,3 +1,4 @@
+
 "use client"
 
 import {
@@ -43,7 +44,9 @@ export default function AdminLayout({
   return (
     <SidebarProvider>
       <Sidebar className="pt-16">
-        <SidebarHeader>
+        <SidebarHeader className="flex items-center justify-between p-2">
+           <div className="flex-1" />
+           <SidebarTrigger />
         </SidebarHeader>
         <SidebarContent>
           <SidebarMenu>
@@ -76,9 +79,6 @@ export default function AdminLayout({
         <SidebarFooter />
       </Sidebar>
       <SidebarInset className="pt-20">
-        <div className="mb-4">
-          <SidebarTrigger />
-        </div>
         {children}
       </SidebarInset>
     </SidebarProvider>
