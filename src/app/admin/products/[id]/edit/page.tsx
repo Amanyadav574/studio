@@ -9,11 +9,10 @@ import { useEffect, useState } from "react";
 
 export default function EditProductPage({ params }: { params: { id: string } }) {
   const [product, setProduct] = useState<Product | null>(null);
-  const { id } = params;
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const fetchedProduct = await getProductById(parseInt(id));
+      const fetchedProduct = await getProductById(parseInt(params.id));
       if (fetchedProduct) {
         setProduct(fetchedProduct);
       } else {
@@ -21,7 +20,7 @@ export default function EditProductPage({ params }: { params: { id: string } }) 
       }
     };
     fetchProduct();
-  }, [id]);
+  }, [params.id]);
 
 
   if (!product) {
