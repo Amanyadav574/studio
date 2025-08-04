@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent } from "@/components/ui/card";
-import { generateImage } from "@/ai/flows/generate-image";
+import { generateAndSaveImage } from "@/ai/flows/generate-and-save-image";
 import { useState, useRef } from "react";
 import { Loader2, Sparkles, Upload } from "lucide-react";
 import Image from "next/image";
@@ -22,7 +22,7 @@ const productSchema = z.object({
   name: z.string().min(2, "Name is required"),
   price: z.coerce.number().min(0.01, "Price must be positive"),
   description: z.string().min(10, "Description must be at least 10 characters"),
-  image: z.string().url("Must be a valid URL or data URI"),
+  image: z.string().min(1, "Image is required."),
 });
 
 interface ProductFormProps {
@@ -89,7 +89,7 @@ export function ProductForm({ product }: ProductFormProps) {
     }
     setIsGenerating(true);
     try {
-      const result = await generateImage({ prompt });
+      const result = await generateAndSaveImage({ prompt });
       form.setValue("image", result.imageUrl, { shouldValidate: true });
       toast({
         title: "Image Generated!",
