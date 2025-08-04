@@ -1,6 +1,7 @@
 
 "use client"
 
+import * as React from "react"
 import {
   Card,
   CardContent,
@@ -20,9 +21,8 @@ import {
   BarChart,
   Bar,
 } from "recharts"
-import { orders, products as allProducts, users } from "@/lib/data"
+import { orders as allOrders, products as allProducts, users } from "@/lib/data"
 import { DollarSign, Package, Users, Activity } from "lucide-react"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   Table,
   TableBody,
@@ -32,8 +32,35 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
+import { DateRangePicker } from "@/components/ui/date-range-picker"
+import type { DateRange } from "react-day-picker"
+import { subDays } from "date-fns"
 
 export default function AdminDashboardPage() {
+  const [dateRange, setDateRange] = React.useState<DateRange | undefined>({
+    from: subDays(new Date(), 29),
+    to: new Date(),
+  });
+
+  const orders = React.useMemo(() => {
+    if (!dateRange?.from) return allOrders;
+    return allOrders.filter(order => {
+        const orderDate = new Date(order.date);
+        const fromDate = new Date(dateRange.from!);
+        // Set to start of the day
+        fromDate.setHours(0,0,0,0);
+        
+        if (dateRange.to) {
+            const toDate = new Date(dateRange.to);
+            // Set to end of the day
+            toDate.setHours(23,59,59,999);
+            return orderDate >= fromDate && orderDate <= toDate;
+        }
+        return orderDate >= fromDate;
+    })
+  }, [dateRange]);
+
+
   const totalRevenue = orders.reduce((sum, order) => sum + order.total, 0)
   const totalSales = orders.length
   const totalUsers = users.length
@@ -67,7 +94,11 @@ export default function AdminDashboardPage() {
 
   return (
     <div className="flex flex-col gap-8">
-      <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+      <div className="flex justify-between items-center">
+        <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+        <DateRangePicker date={dateRange} onDateChange={setDateRange} />
+      </div>
+
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
@@ -78,7 +109,7 @@ export default function AdminDashboardPage() {
           <CardContent>
             <div className="text-2xl font-bold">${totalRevenue.toFixed(2)}</div>
             <p className="text-xs text-muted-foreground">
-              Across all sales
+              For the selected period
             </p>
           </CardContent>
         </Card>
@@ -90,7 +121,7 @@ export default function AdminDashboardPage() {
           <CardContent>
             <div className="text-2xl font-bold">+{totalSales}</div>
              <p className="text-xs text-muted-foreground">
-              Total orders placed
+              Total orders in period
             </p>
           </CardContent>
         </Card>
@@ -125,7 +156,7 @@ export default function AdminDashboardPage() {
           <CardHeader>
             <CardTitle>Revenue Overview</CardTitle>
              <CardDescription>
-              A line chart showing revenue over the past few months.
+              A line chart showing revenue for the selected period.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -162,7 +193,7 @@ export default function AdminDashboardPage() {
           <CardHeader>
             <CardTitle>Recent Sales</CardTitle>
             <CardDescription>
-              You made {totalSales} sales this month.
+              Your most recent sales for the selected period.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -197,7 +228,7 @@ export default function AdminDashboardPage() {
         <CardHeader>
           <CardTitle>Top Selling Products</CardTitle>
           <CardDescription>
-            A bar chart showing the quantity of each product sold.
+            A bar chart showing the quantity of each product sold in the period.
           </CardDescription>
         </CardHeader>
         <CardContent>
