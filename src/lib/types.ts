@@ -18,3 +18,12 @@ export interface User {
   password?: string; // Should be hashed in a real app
   role: 'admin' | 'user';
 }
+
+export interface Order {
+    id: string;
+    customerName: string;
+    date: Date;
+    total: number;
+    status: 'Pending' | 'Delivered';
+    items: CartItem[];
+}

@@ -1,4 +1,4 @@
-import type { Product, User } from '@/lib/types';
+import type { Product, User, Order } from '@/lib/types';
 
 export const products: Product[] = [
   {
@@ -83,3 +83,48 @@ export const users: User[] = [
     role: 'user',
   },
 ];
+
+export let orders: Order[] = [
+    {
+      id: "ORD001",
+      customerName: "John Doe",
+      date: new Date("2024-05-20T10:30:00Z"),
+      total: 34.72,
+      status: "Delivered",
+      items: [
+        { ...products[0], quantity: 2 },
+        { ...products[2], quantity: 1 },
+        { ...products[4], quantity: 3 },
+      ],
+    },
+    {
+      id: "ORD002",
+      customerName: "Jane Smith",
+      date: new Date("2024-05-21T14:00:00Z"),
+      total: 14.56,
+      status: "Pending",
+      items: [
+        { ...products[1], quantity: 1 },
+        { ...products[3], quantity: 1 },
+      ],
+    },
+    {
+      id: "ORD003",
+      customerName: "User",
+      date: new Date(),
+      total: 8.88,
+      status: "Pending",
+      items: [{...products[7], quantity: 2}],
+  }
+];
+
+// Function to add a new order
+export const addOrder = (newOrder: Omit<Order, 'id' | 'date'>) => {
+  const orderWithDetails: Order = {
+    ...newOrder,
+    id: `ORD${(orders.length + 1).toString().padStart(3, '0')}`,
+    date: new Date(),
+  };
+  orders.unshift(orderWithDetails);
+  return orderWithDetails;
+};

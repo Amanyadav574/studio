@@ -12,6 +12,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { addOrder } from "@/lib/data";
+import { useAuth } from "@/context/AuthContext";
 
 const checkoutSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -26,6 +28,7 @@ const checkoutSchema = z.object({
 
 export default function CheckoutPage() {
   const { cartItems, getCartTotal, clearCart } = useCart();
+  const { currentUser } = useAuth();
   const { toast } = useToast();
   const router = useRouter();
   const total = getCartTotal();
@@ -34,6 +37,13 @@ export default function CheckoutPage() {
     resolver: zodResolver(checkoutSchema),
     defaultValues: { name: "", email: "", address: "", city: "", zip: "", card: "4242424242424242", expiry: "12/28", cvc: "123" },
   });
+  
+  useEffect(() => {
+     if (currentUser) {
+      form.setValue('name', currentUser.name);
+      form.setValue('email', currentUser.email);
+    }
+  }, [currentUser, form]);
 
   useEffect(() => {
     if (cartItems.length === 0) {
@@ -42,7 +52,12 @@ export default function CheckoutPage() {
   }, [cartItems, router]);
 
   function onSubmit(values: z.infer<typeof checkoutSchema>) {
-    console.log(values);
+    addOrder({
+        customerName: values.name,
+        total,
+        status: 'Pending',
+        items: cartItems,
+    });
     toast({
       title: "Order Placed!",
       description: "Thank you for your purchase. Your order is being processed.",

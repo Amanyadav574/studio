@@ -60,6 +60,14 @@ export default function AdminLayout({
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
+                <SidebarMenuButton asChild isActive={pathname.startsWith('/admin/orders')}>
+                    <Link href="/admin/orders">
+                        <ShoppingCart />
+                        Orders
+                    </Link>
+                </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
               <SidebarMenuButton asChild isActive={pathname.startsWith('/admin/products')}>
                 <Link href="/admin/products">
                   <Package />
@@ -71,7 +79,7 @@ export default function AdminLayout({
         </SidebarContent>
         <SidebarFooter />
       </Sidebar>
-      <SidebarInset>{children}</SidebarInset>
+      <SidebarInset className="pt-16">{children}</SidebarInset>
     </SidebarProvider>
   )
 }
