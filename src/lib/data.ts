@@ -7,7 +7,7 @@ export const products: Product[] = [
     name: 'Organic Apples',
     price: 3.99,
     description: 'Crisp, juicy, and certified organic Gala apples. Perfect for snacking or baking. Sourced from local orchards.',
-    image: 'https://placehold.co/600x600.png',
+    image: 'https://placehold.co/600x600/f44336/ffffff.png',
     dataAiHint: 'apples fruit',
     nutrition: [
         { name: 'Calories', value: '95' },
@@ -25,7 +25,7 @@ export const products: Product[] = [
     name: 'Sourdough Bread',
     price: 5.49,
     description: 'Artisanal sourdough loaf with a chewy crust and soft interior. Baked fresh daily. Contains wheat and gluten.',
-    image: 'https://placehold.co/600x600.png',
+    image: 'https://placehold.co/600x600/d7ccc8/000000.png',
     dataAiHint: 'sourdough bread',
     nutrition: [
         { name: 'Calories', value: '170' },
@@ -42,7 +42,7 @@ export const products: Product[] = [
     name: 'Free-Range Eggs',
     price: 4.99,
     description: 'One dozen large brown eggs from free-range chickens. Rich yolks and excellent for all your cooking needs.',
-    image: 'https://placehold.co/600x600.png',
+    image: 'https://placehold.co/600x600/ffc107/000000.png',
     dataAiHint: 'eggs breakfast',
     reviews: [
         { author: 'Diana', rating: 5, comment: 'Yolks are so orange and rich!', date: '2024-05-22' },
@@ -54,7 +54,7 @@ export const products: Product[] = [
     name: 'Whole Milk',
     price: 2.79,
     description: 'Gallon of fresh whole milk, pasteurized and vitamin D fortified. Great for cereals, coffee, or just a cold glass.',
-    image: 'https://placehold.co/600x600.png',
+    image: 'https://placehold.co/600x600/e3f2fd/000000.png',
     dataAiHint: 'milk dairy',
   },
   {
@@ -62,7 +62,7 @@ export const products: Product[] = [
     name: 'Avocado',
     price: 1.99,
     description: 'Single large Hass avocado. Creamy, delicious, and packed with healthy fats. Ready to be made into guacamole or sliced on toast.',
-    image: 'https://placehold.co/600x600.png',
+    image: 'https://placehold.co/600x600/4caf50/ffffff.png',
     dataAiHint: 'avocado fruit',
   },
   {
@@ -70,7 +70,7 @@ export const products: Product[] = [
     name: 'Cheddar Cheese',
     price: 6.29,
     description: '8oz block of sharp cheddar cheese. Aged for 9 months for a rich, tangy flavor. Perfect for sandwiches or a cheese board.',
-    image: 'https://placehold.co/600x600.png',
+    image: 'https://placehold.co/600x600/ff9800/000000.png',
     dataAiHint: 'cheddar cheese',
   },
   {
@@ -78,7 +78,7 @@ export const products: Product[] = [
     name: 'Baby Carrots',
     price: 2.49,
     description: '1lb bag of peeled baby carrots. A convenient and healthy snack for all ages. Great for dipping.',
-    image: 'https://placehold.co/600x600.png',
+    image: 'https://placehold.co/600x600/ff5722/ffffff.png',
     dataAiHint: 'carrots vegetable',
   },
   {
@@ -86,7 +86,7 @@ export const products: Product[] = [
     name: 'Greek Yogurt',
     price: 3.89,
     description: '32oz container of plain Greek yogurt. Thick, creamy, and high in protein. An excellent base for breakfast bowls.',
-    image: 'https://placehold.co/600x600.png',
+    image: 'https://placehold.co/600x600/f5f5f5/000000.png',
     dataAiHint: 'yogurt dairy',
   },
   {
@@ -94,7 +94,7 @@ export const products: Product[] = [
     name: 'Organic Bananas',
     price: 1.29,
     description: 'A bunch of ripe, organic bananas. Naturally sweet and full of potassium.',
-    image: 'https://placehold.co/600x600.png',
+    image: 'https://placehold.co/600x600/ffee58/000000.png',
     dataAiHint: 'bananas fruit',
   },
   {
@@ -102,7 +102,7 @@ export const products: Product[] = [
     name: 'Almond Milk',
     price: 3.49,
     description: 'Half-gallon of unsweetened almond milk. A great dairy-free alternative.',
-    image: 'https://placehold.co/600x600.png',
+    image: 'https://placehold.co/600x600/efebe9/000000.png',
     dataAiHint: 'almond milk',
   },
   {
@@ -110,7 +110,7 @@ export const products: Product[] = [
     name: 'Dark Chocolate Bar',
     price: 2.99,
     description: '70% cacao dark chocolate bar. Rich and intense flavor.',
-    image: 'https://placehold.co/600x600.png',
+    image: 'https://placehold.co/600x600/3e2723/ffffff.png',
     dataAiHint: 'dark chocolate',
   },
   {
@@ -118,7 +118,7 @@ export const products: Product[] = [
     name: 'Ground Coffee',
     price: 12.99,
     description: '12oz bag of medium-roast ground coffee. Ethically sourced Arabica beans.',
-    image: 'https://placehold.co/600x600.png',
+    image: 'https://placehold.co/600x600/6d4c41/ffffff.png',
     dataAiHint: 'coffee beans',
   },
 ];
