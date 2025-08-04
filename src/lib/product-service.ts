@@ -9,12 +9,13 @@ import { revalidatePath } from 'next/cache';
 let products: Product[] = [...initialProducts];
 
 export async function getProducts(): Promise<Product[]> {
-  // Return a copy to prevent direct mutation
+  // Return a copy to prevent direct mutation of the original data
   return JSON.parse(JSON.stringify(products));
 }
 
 export async function getProductById(id: number): Promise<Product | undefined> {
-  return products.find(p => p.id === id);
+  const product = products.find(p => p.id === id);
+  return product ? JSON.parse(JSON.stringify(product)) : undefined;
 }
 
 export async function updateProduct(updatedProduct: Product): Promise<Product> {
