@@ -18,15 +18,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import Image from "next/image"
+import Link from "next/link"
 
 export default function AdminProductsPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-3xl font-bold">Products</h1>
-        <Button>
-          <PlusCircle className="mr-2" />
-          Add Product
+        <Button asChild>
+          <Link href="/admin/products/new">
+            <PlusCircle className="mr-2" />
+            Add Product
+          </Link>
         </Button>
       </div>
 
@@ -61,7 +64,9 @@ export default function AdminProductsPage() {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
-                    <DropdownMenuItem>Edit</DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href={`/admin/products/${product.id}/edit`}>Edit</Link>
+                    </DropdownMenuItem>
                     <DropdownMenuItem className="text-destructive">
                       Delete
                     </DropdownMenuItem>
