@@ -1,14 +1,31 @@
+
 "use client";
 
 import { notFound } from "next/navigation";
-import { products } from "@/lib/data";
+import { getProductById } from "@/lib/product-service";
 import { ProductForm } from "../../ProductForm";
+import type { Product } from "@/lib/types";
+import { useEffect, useState } from "react";
 
 export default function EditProductPage({ params }: { params: { id: string } }) {
-  const product = products.find(p => p.id === parseInt(params.id));
+  const [product, setProduct] = useState<Product | null>(null);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const fetchedProduct = await getProductById(parseInt(params.id));
+      if (fetchedProduct) {
+        setProduct(fetchedProduct);
+      } else {
+        notFound();
+      }
+    };
+    fetchProduct();
+  }, [params.id]);
+
 
   if (!product) {
-    notFound();
+    // You can return a loading spinner here
+    return <div>Loading...</div>;
   }
 
   return (

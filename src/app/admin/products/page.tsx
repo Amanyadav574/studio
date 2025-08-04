@@ -1,3 +1,4 @@
+
 "use client"
 
 import { Button } from "@/components/ui/button"
@@ -9,7 +10,7 @@ import {
   TableBody,
   TableCell,
 } from "@/components/ui/table"
-import { products } from "@/lib/data"
+import { getProducts } from "@/lib/product-service"
 import { PlusCircle, MoreHorizontal } from "lucide-react"
 import {
   DropdownMenu,
@@ -19,8 +20,20 @@ import {
 } from "@/components/ui/dropdown-menu"
 import Image from "next/image"
 import Link from "next/link"
+import type { Product } from "@/lib/types"
+import { useEffect, useState } from "react"
 
 export default function AdminProductsPage() {
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const products = await getProducts();
+      setProducts(products);
+    }
+    fetchProducts();
+  }, []);
+
   return (
     <div>
       <div className="flex items-center justify-between mb-8">
@@ -51,7 +64,7 @@ export default function AdminProductsPage() {
                   alt={product.name}
                   width={40}
                   height={40}
-                  className="rounded-md"
+                  className="rounded-md object-cover"
                 />
               </TableCell>
               <TableCell>{product.name}</TableCell>

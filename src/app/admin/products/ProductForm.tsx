@@ -16,6 +16,7 @@ import { generateImage } from "@/ai/flows/generate-image";
 import { useState, useRef } from "react";
 import { Loader2, Sparkles, Upload } from "lucide-react";
 import Image from "next/image";
+import { updateProduct, addProduct } from "@/lib/product-service";
 
 const productSchema = z.object({
   name: z.string().min(2, "Name is required"),
@@ -32,6 +33,7 @@ export function ProductForm({ product }: ProductFormProps) {
   const router = useRouter();
   const { toast } = useToast();
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   const form = useForm<z.infer<typeof productSchema>>({
@@ -44,14 +46,34 @@ export function ProductForm({ product }: ProductFormProps) {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof productSchema>) => {
-    // In a real app, you would save this to your database
-    console.log("Form submitted:", values);
-    toast({
-      title: product ? "Product Updated!" : "Product Created!",
-      description: `The product "${values.name}" has been saved.`,
-    });
-    router.push("/admin/products");
+  const onSubmit = async (values: z.infer<typeof productSchema>) => {
+    setIsSaving(true);
+    try {
+      if (product) {
+        await updateProduct({ ...product, ...values });
+        toast({
+          title: "Product Updated!",
+          description: `The product "${values.name}" has been saved.`,
+        });
+      } else {
+        await addProduct(values);
+        toast({
+          title: "Product Created!",
+          description: `The product "${values.name}" has been created.`,
+        });
+      }
+      router.push("/admin/products");
+      router.refresh(); // Force a refresh to reflect changes
+    } catch (error) {
+      console.error("Failed to save product:", error);
+      toast({
+        title: "Save Failed",
+        description: "There was an error saving the product. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleGenerateImage = async () => {
@@ -183,10 +205,12 @@ export function ProductForm({ product }: ProductFormProps) {
               </div>
             )}
             <div className="flex justify-end gap-2">
-              <Button type="button" variant="outline" onClick={() => router.back()}>
+              <Button type="button" variant="outline" onClick={() => router.back()} disabled={isSaving}>
                 Cancel
               </Button>
-              <Button type="submit">{product ? "Save Changes" : "Create Product"}</Button>
+              <Button type="submit" disabled={isSaving || isGenerating}>
+                {isSaving ? <Loader2 className="animate-spin" /> : (product ? "Save Changes" : "Create Product")}
+              </Button>
             </div>
           </form>
         </Form>

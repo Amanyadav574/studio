@@ -1,7 +1,10 @@
-import { products } from '@/lib/data';
+
+import { getProducts } from '@/lib/product-service';
 import { ProductCard } from '@/components/ProductCard';
 
-export default function HomePage() {
+export default async function HomePage() {
+  const products = await getProducts();
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="mb-8 text-5xl font-black font-headline uppercase tracking-wider text-center md:text-left">

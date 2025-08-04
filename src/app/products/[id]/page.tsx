@@ -3,29 +3,41 @@
 
 import Image from 'next/image';
 import { notFound, useParams } from 'next/navigation';
-import { products } from '@/lib/data';
+import { getProductById } from '@/lib/product-service';
 import { useCart } from '@/context/CartContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Minus, Plus, ShoppingCart, Star, MessageSquare, Utensils } from 'lucide-react';
 import Link from 'next/link';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
+import { Card, CardContent } from '@/components/ui/card';
 import { format } from 'date-fns';
+import type { Product } from '@/lib/types';
 
 export default function ProductDetailPage() {
   const [quantity, setQuantity] = useState(1);
   const { addToCart } = useCart();
   const params = useParams();
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
-  
-  const product = products.find(p => p.id === parseInt(id));
+  const [product, setProduct] = useState<Product | null>(null);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const fetchedProduct = await getProductById(parseInt(id));
+      if (fetchedProduct) {
+        setProduct(fetchedProduct);
+      } else {
+        notFound();
+      }
+    };
+    if(id) {
+        fetchProduct();
+    }
+  }, [id]);
 
   if (!product) {
-    notFound();
+    return <div>Loading...</div>; // Or a skeleton loader
   }
 
   const handleAddToCart = () => {
@@ -66,7 +78,7 @@ export default function ProductDetailPage() {
             <p className="my-4 text-4xl font-bold">${product.price.toFixed(2)}</p>
             <p className="text-lg leading-relaxed">{product.description}</p>
             
-            <div className="mt-8 flex flex-col sm:flex-row items-center gap-4">
+            <div className="mt-8 flex flex-col sm:flex-row items-stretch gap-4">
               <div className="flex items-center">
                   <Button size="icon" variant="outline" className="h-12 w-12 border-2 border-foreground rounded-r-none" onClick={() => handleQuantityChange(-1)}>
                       <Minus />
