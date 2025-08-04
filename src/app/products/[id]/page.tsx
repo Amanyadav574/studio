@@ -7,8 +7,13 @@ import { useCart } from '@/context/CartContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useState } from 'react';
-import { Minus, Plus, ShoppingCart } from 'lucide-react';
+import { Minus, Plus, ShoppingCart, Star, MessageSquare, Utensils } from 'lucide-react';
 import Link from 'next/link';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { format } from 'date-fns';
 
 export default function ProductDetailPage({ params }: { params: { id: string } }) {
   const [quantity, setQuantity] = useState(1);
@@ -28,8 +33,14 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
     setQuantity(prev => Math.max(1, prev + amount));
   };
 
+  const renderStars = (rating: number) => {
+    return Array.from({ length: 5 }, (_, i) => (
+      <Star key={i} className={`h-5 w-5 ${i < rating ? 'text-yellow-400 fill-yellow-400' : 'text-muted-foreground'}`} />
+    ));
+  };
+
   return (
-    <div className="bg-card p-8 border-2 border-foreground">
+    <div className="bg-card p-4 sm:p-8 border-2 border-foreground">
       <div className="grid md:grid-cols-2 gap-8">
         <div className="relative aspect-square w-full border-2 border-foreground">
           <Image
@@ -42,6 +53,11 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
           />
         </div>
         <div>
+          <Button asChild variant="link" className="p-0 mb-4">
+            <Link href="/">
+              &larr; Back to all products
+            </Link>
+          </Button>
           <h1 className="text-4xl font-black font-headline uppercase tracking-wide">{product.name}</h1>
           <p className="my-4 text-4xl font-bold">${product.price.toFixed(2)}</p>
           <p className="text-lg leading-relaxed">{product.description}</p>
@@ -66,13 +82,55 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
               <ShoppingCart className="mr-2" /> Add to Cart
             </Button>
           </div>
-
-          <Button asChild variant="link" className="mt-8">
-            <Link href="/">
-              &larr; Back to all products
-            </Link>
-          </Button>
         </div>
+      </div>
+      <div className="mt-12">
+        <Tabs defaultValue="reviews">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="reviews"><MessageSquare className="mr-2" />Reviews ({product.reviews?.length || 0})</TabsTrigger>
+            <TabsTrigger value="nutrition"><Utensils className="mr-2" />Nutrition Facts</TabsTrigger>
+          </TabsList>
+          <TabsContent value="reviews">
+            <Card className="border-0">
+              <CardContent className="pt-6">
+                {product.reviews && product.reviews.length > 0 ? (
+                  <div className="space-y-6">
+                    {product.reviews.map((review, index) => (
+                      <div key={index}>
+                        <div className="flex items-center gap-4">
+                           <div className="font-bold">{review.author}</div>
+                           <div className="flex">{renderStars(review.rating)}</div>
+                           <div className="text-sm text-muted-foreground">{format(new Date(review.date), 'PPP')}</div>
+                        </div>
+                        <p className="mt-2 text-muted-foreground">{review.comment}</p>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p>No reviews for this product yet.</p>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+          <TabsContent value="nutrition">
+            <Card className="border-0">
+               <CardContent className="pt-6">
+                {product.nutrition && product.nutrition.length > 0 ? (
+                   <div className="space-y-2">
+                    {product.nutrition.map((fact, index) => (
+                        <div key={index} className="flex justify-between border-b py-2">
+                            <span className="font-semibold">{fact.name}</span>
+                            <span>{fact.value}</span>
+                        </div>
+                    ))}
+                   </div>
+                ) : (
+                  <p>No nutrition information available for this product.</p>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );

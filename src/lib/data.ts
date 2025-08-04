@@ -9,6 +9,16 @@ export const products: Product[] = [
     description: 'Crisp, juicy, and certified organic Gala apples. Perfect for snacking or baking. Sourced from local orchards.',
     image: 'https://placehold.co/600x600.png',
     dataAiHint: 'apples fruit',
+    nutrition: [
+        { name: 'Calories', value: '95' },
+        { name: 'Sugar', value: '19g' },
+        { name: 'Fiber', value: '4g' },
+        { name: 'Vitamin C', value: '14% DV' },
+    ],
+    reviews: [
+        { author: 'Alice', rating: 5, comment: 'So fresh and delicious!', date: '2024-05-20' },
+        { author: 'Bob', rating: 4, comment: 'A bit pricey but worth it.', date: '2024-05-18' },
+    ]
   },
   {
     id: 2,
@@ -17,6 +27,15 @@ export const products: Product[] = [
     description: 'Artisanal sourdough loaf with a chewy crust and soft interior. Baked fresh daily. Contains wheat and gluten.',
     image: 'https://placehold.co/600x600.png',
     dataAiHint: 'sourdough bread',
+    nutrition: [
+        { name: 'Calories', value: '170' },
+        { name: 'Carbs', value: '32g' },
+        { name: 'Protein', value: '6g' },
+        { name: 'Sodium', value: '380mg' },
+    ],
+    reviews: [
+        { author: 'Charlie', rating: 5, comment: 'The best sourdough in town.', date: '2024-05-21' },
+    ]
   },
   {
     id: 3,
@@ -25,6 +44,10 @@ export const products: Product[] = [
     description: 'One dozen large brown eggs from free-range chickens. Rich yolks and excellent for all your cooking needs.',
     image: 'https://placehold.co/600x600.png',
     dataAiHint: 'eggs breakfast',
+    reviews: [
+        { author: 'Diana', rating: 5, comment: 'Yolks are so orange and rich!', date: '2024-05-22' },
+        { author: 'Evan', rating: 5, comment: 'My go-to for breakfast.', date: '2024-05-19' },
+    ]
   },
   {
     id: 4,

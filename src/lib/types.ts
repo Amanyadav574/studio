@@ -5,6 +5,8 @@ export interface Product {
   description: string;
   image: string;
   dataAiHint: string;
+  nutrition?: { name: string; value: string }[];
+  reviews?: { author: string; rating: number; comment: string; date: string }[];
 }
 
 export interface CartItem extends Product {
