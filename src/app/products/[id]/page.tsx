@@ -2,7 +2,7 @@
 "use client";
 
 import Image from 'next/image';
-import { notFound } from 'next/navigation';
+import { notFound, useParams } from 'next/navigation';
 import { products } from '@/lib/data';
 import { useCart } from '@/context/CartContext';
 import { Button } from '@/components/ui/button';
@@ -16,11 +16,13 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { format } from 'date-fns';
 
-export default function ProductDetailPage({ params }: { params: { id: string } }) {
+export default function ProductDetailPage() {
   const [quantity, setQuantity] = useState(1);
   const { addToCart } = useCart();
+  const params = useParams();
+  const id = Array.isArray(params.id) ? params.id[0] : params.id;
   
-  const product = products.find(p => p.id === parseInt(params.id));
+  const product = products.find(p => p.id === parseInt(id));
 
   if (!product) {
     notFound();
