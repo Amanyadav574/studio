@@ -2,6 +2,9 @@
 import { getProducts } from '@/lib/product-service';
 import { ProductCard } from '@/components/ProductCard';
 
+// Force dynamic rendering to ensure latest data is fetched
+export const dynamic = 'force-dynamic';
+
 export default async function HomePage() {
   const products = await getProducts();
 

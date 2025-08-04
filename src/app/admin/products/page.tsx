@@ -1,6 +1,4 @@
 
-"use client"
-
 import { Button } from "@/components/ui/button"
 import {
   Table,
@@ -20,19 +18,12 @@ import {
 } from "@/components/ui/dropdown-menu"
 import Image from "next/image"
 import Link from "next/link"
-import type { Product } from "@/lib/types"
-import { useEffect, useState } from "react"
 
-export default function AdminProductsPage() {
-  const [products, setProducts] = useState<Product[]>([]);
+// Force dynamic rendering to ensure latest data is fetched
+export const dynamic = 'force-dynamic';
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const products = await getProducts();
-      setProducts(products);
-    }
-    fetchProducts();
-  }, []);
+export default async function AdminProductsPage() {
+  const products = await getProducts();
 
   return (
     <div>
