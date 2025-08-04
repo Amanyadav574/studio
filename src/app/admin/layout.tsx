@@ -5,6 +5,7 @@ import {
   LayoutDashboard,
   Package,
   ShoppingCart,
+  PanelLeft,
 } from "lucide-react"
 import { useAuth } from "@/context/AuthContext"
 import { useRouter } from "next/navigation"
@@ -45,7 +46,7 @@ export default function AdminLayout({
     <SidebarProvider>
       <Sidebar className="pt-16">
         <SidebarHeader className="flex items-center justify-center p-2">
-           <SidebarTrigger />
+           {/* The trigger is now in the SidebarInset */}
         </SidebarHeader>
         <SidebarContent>
           <SidebarMenu>
@@ -77,7 +78,10 @@ export default function AdminLayout({
         </SidebarContent>
         <SidebarFooter />
       </Sidebar>
-      <SidebarInset className="pt-20">
+      <SidebarInset className="pt-16">
+        <div className="mb-4">
+            <SidebarTrigger />
+        </div>
         {children}
       </SidebarInset>
     </SidebarProvider>
