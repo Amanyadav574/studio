@@ -44,7 +44,6 @@ export default function AdminLayout({
     <SidebarProvider>
       <Sidebar className="pt-16">
         <SidebarHeader>
-          <SidebarTrigger />
         </SidebarHeader>
         <SidebarContent>
           <SidebarMenu>
@@ -76,7 +75,12 @@ export default function AdminLayout({
         </SidebarContent>
         <SidebarFooter />
       </Sidebar>
-      <SidebarInset className="pt-20">{children}</SidebarInset>
+      <SidebarInset className="pt-20">
+        <div className="mb-4">
+          <SidebarTrigger />
+        </div>
+        {children}
+      </SidebarInset>
     </SidebarProvider>
   )
 }
