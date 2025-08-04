@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from 'next/image';
@@ -63,7 +64,7 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
             <p className="my-4 text-4xl font-bold">${product.price.toFixed(2)}</p>
             <p className="text-lg leading-relaxed">{product.description}</p>
             
-            <div className="mt-8 flex items-stretch gap-4">
+            <div className="mt-8 flex items-center gap-4">
               <div className="flex items-center">
                   <Button size="icon" variant="outline" className="h-12 w-12 border-2 border-foreground" onClick={() => handleQuantityChange(-1)}>
                       <Minus />
@@ -79,7 +80,7 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
                       <Plus />
                   </Button>
               </div>
-              <Button onClick={handleAddToCart} size="lg" className="flex-1 text-lg font-bold bg-primary text-primary-foreground hover:bg-primary/90">
+              <Button onClick={handleAddToCart} size="lg" className="flex-1 text-lg font-bold bg-primary text-primary-foreground hover:bg-primary/90 h-12">
                 <ShoppingCart className="mr-2" /> Add to Cart
               </Button>
             </div>
