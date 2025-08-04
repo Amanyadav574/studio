@@ -32,7 +32,7 @@ export default function CheckoutPage() {
 
   const form = useForm<z.infer<typeof checkoutSchema>>({
     resolver: zodResolver(checkoutSchema),
-    defaultValues: { name: "", email: "", address: "", city: "", zip: "", card: "", expiry: "", cvc: "" },
+    defaultValues: { name: "", email: "", address: "", city: "", zip: "", card: "4242424242424242", expiry: "12/28", cvc: "123" },
   });
 
   useEffect(() => {
