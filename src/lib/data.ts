@@ -1,4 +1,4 @@
-import type { Product } from '@/lib/types';
+import type { Product, User } from '@/lib/types';
 
 export const products: Product[] = [
   {
@@ -64,5 +64,22 @@ export const products: Product[] = [
     description: '32oz container of plain Greek yogurt. Thick, creamy, and high in protein. An excellent base for breakfast bowls.',
     image: 'https://placehold.co/600x600.png',
     dataAiHint: 'yogurt dairy',
+  },
+];
+
+export const users: User[] = [
+  {
+    id: 1,
+    name: 'Admin',
+    email: 'admin@example.com',
+    password: 'password', // In a real app, this would be hashed
+    role: 'admin',
+  },
+  {
+    id: 2,
+    name: 'User',
+    email: 'user@example.com',
+    password: 'password', // In a real app, this would be hashed
+    role: 'user',
   },
 ];

@@ -1,12 +1,15 @@
 "use client";
 
 import Link from 'next/link';
-import { ShoppingCart, User } from 'lucide-react';
+import { ShoppingCart, User, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
+import { useAuth } from '@/context/AuthContext';
+import { Skeleton } from './ui/skeleton';
 
 export function Header() {
   const { getCartItemCount } = useCart();
+  const { currentUser, logout, loading } = useAuth();
   const itemCount = getCartItemCount();
 
   return (
@@ -27,12 +30,24 @@ export function Header() {
               <span className="sr-only">Shopping Cart</span>
             </Link>
           </Button>
-          <Button variant="ghost" asChild className="rounded-none">
-            <Link href="/login">
-              <User />
-              <span className="sr-only">Login</span>
-            </Link>
-          </Button>
+          {loading ? (
+            <Skeleton className="h-8 w-24" />
+          ) : currentUser ? (
+            <>
+              <span className="font-semibold">{currentUser.name}</span>
+              <Button variant="ghost" size="icon" onClick={logout} className="rounded-none">
+                <LogOut />
+                <span className="sr-only">Logout</span>
+              </Button>
+            </>
+          ) : (
+            <Button variant="ghost" asChild className="rounded-none">
+              <Link href="/login">
+                <User />
+                <span className="sr-only">Login</span>
+              </Link>
+            </Button>
+          )}
         </nav>
       </div>
     </header>
