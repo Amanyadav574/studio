@@ -1,3 +1,4 @@
+
 "use client"
 
 import {
@@ -8,35 +9,67 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import {
-  BarChart,
-  Bar,
+  LineChart,
+  Line,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
   Legend,
   ResponsiveContainer,
+  BarChart,
+  Bar,
 } from "recharts"
-import { orders, products as allProducts } from "@/lib/data"
-import { DollarSign, Package } from "lucide-react"
+import { orders, products as allProducts, users } from "@/lib/data"
+import { DollarSign, Package, Users, Activity } from "lucide-react"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+import { Badge } from "@/components/ui/badge"
 
 export default function AdminDashboardPage() {
   const totalRevenue = orders.reduce((sum, order) => sum + order.total, 0)
   const totalSales = orders.length
+  const totalUsers = users.length
+
+  // Simplified "Active Now" metric
+  const activeNow = Math.floor(Math.random() * 10) + 1;
 
   const productSales = allProducts.map((product) => {
     const sales = orders.reduce((sum, order) => {
       const item = order.items.find((item) => item.id === product.id)
       return sum + (item ? item.quantity : 0)
     }, 0)
-    return { name: product.name, sales }
+    return { name: product.name, sales, revenue: sales * product.price }
   }).filter(p => p.sales > 0);
 
-  return (
-    <div>
-      <h1 className="text-3xl font-bold mb-8">Admin Dashboard</h1>
+  const topSellingProducts = [...productSales].sort((a, b) => b.sales - a.sales).slice(0, 5);
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-8">
+  const recentSales = orders.slice(0, 5);
+
+  const salesByMonth = orders.reduce((acc, order) => {
+    const month = new Date(order.date).toLocaleString('default', { month: 'short', year: 'numeric' });
+    if (!acc[month]) {
+      acc[month] = 0;
+    }
+    acc[month] += order.total;
+    return acc;
+  }, {} as Record<string, number>);
+
+  const monthlyChartData = Object.entries(salesByMonth).map(([name, revenue]) => ({ name, revenue: parseFloat(revenue.toFixed(2)) })).reverse();
+
+
+  return (
+    <div className="flex flex-col gap-8">
+      <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
@@ -44,29 +77,132 @@ export default function AdminDashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">${totalRevenue.toFixed(2)}</div>
+            <p className="text-xs text-muted-foreground">
+              Across all sales
+            </p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Sales</CardTitle>
+            <CardTitle className="text-sm font-medium">Total Sales</CardTitle>
             <Package className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">+{totalSales}</div>
+             <p className="text-xs text-muted-foreground">
+              Total orders placed
+            </p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Users</CardTitle>
+            <Users className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{totalUsers}</div>
+             <p className="text-xs text-muted-foreground">
+              Admin and customer accounts
+            </p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Active Now</CardTitle>
+            <Activity className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">+{activeNow}</div>
+             <p className="text-xs text-muted-foreground">
+              Users on the site right now
+            </p>
           </CardContent>
         </Card>
       </div>
 
-      <Card>
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-7">
+        <Card className="lg:col-span-4">
+          <CardHeader>
+            <CardTitle>Revenue Overview</CardTitle>
+             <CardDescription>
+              A line chart showing revenue over the past few months.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={350}>
+              <LineChart data={monthlyChartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis
+                  dataKey="name"
+                  stroke="#888888"
+                  fontSize={12}
+                  tickLine={false}
+                  axisLine={false}
+                />
+                <YAxis
+                  stroke="#888888"
+                  fontSize={12}
+                  tickLine={false}
+                  axisLine={false}
+                  tickFormatter={(value) => `$${value}`}
+                />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "hsl(var(--background))",
+                    borderColor: "hsl(var(--border))",
+                  }}
+                />
+                <Legend />
+                <Line type="monotone" dataKey="revenue" stroke="hsl(var(--primary))" activeDot={{ r: 8 }} />
+              </LineChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+        <Card className="lg:col-span-3">
+          <CardHeader>
+            <CardTitle>Recent Sales</CardTitle>
+            <CardDescription>
+              You made {totalSales} sales this month.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Customer</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead className="text-right">Amount</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {recentSales.map((order) => (
+                    <TableRow key={order.id}>
+                      <TableCell>
+                        <div className="font-medium">{order.customerName}</div>
+                      </TableCell>
+                       <TableCell>
+                          <Badge variant={order.status === 'Delivered' ? 'default' : 'secondary'}>
+                              {order.status}
+                          </Badge>
+                      </TableCell>
+                      <TableCell className="text-right font-mono">${order.total.toFixed(2)}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+          </CardContent>
+        </Card>
+      </div>
+       <Card>
         <CardHeader>
-          <CardTitle>Product Sales</CardTitle>
+          <CardTitle>Top Selling Products</CardTitle>
           <CardDescription>
             A bar chart showing the quantity of each product sold.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={350}>
-            <BarChart data={productSales}>
+            <BarChart data={topSellingProducts}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis
                 dataKey="name"

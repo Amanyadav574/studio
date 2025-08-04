@@ -1,3 +1,4 @@
+
 import type { Product, User, Order } from '@/lib/types';
 
 export const products: Product[] = [
@@ -82,12 +83,33 @@ export const users: User[] = [
     password: 'password', // In a real app, this would be hashed
     role: 'user',
   },
+   {
+    id: 3,
+    name: 'Alice Johnson',
+    email: 'alice@example.com',
+    password: 'password',
+    role: 'user',
+  },
+  {
+    id: 4,
+    name: 'Bob Williams',
+    email: 'bob@example.com',
+    password: 'password',
+    role: 'user',
+  },
+  {
+    id: 5,
+    name: 'Charlie Brown',
+    email: 'charlie@example.com',
+    password: 'password',
+    role: 'user',
+  },
 ];
 
 export let orders: Order[] = [
     {
       id: "ORD001",
-      customerName: "John Doe",
+      customerName: "Alice Johnson",
       date: new Date("2024-05-20T10:30:00Z"),
       total: 34.72,
       status: "Delivered",
@@ -99,7 +121,7 @@ export let orders: Order[] = [
     },
     {
       id: "ORD002",
-      customerName: "Jane Smith",
+      customerName: "Bob Williams",
       date: new Date("2024-05-21T14:00:00Z"),
       total: 14.56,
       status: "Pending",
@@ -110,12 +132,47 @@ export let orders: Order[] = [
     },
     {
       id: "ORD003",
+      customerName: "Charlie Brown",
+      date: new Date("2024-04-15T09:12:00Z"),
+      total: 8.88,
+      status: "Delivered",
+      items: [{...products[7], quantity: 2}],
+    },
+    {
+      id: "ORD004",
+      customerName: "Alice Johnson",
+      date: new Date("2024-04-28T18:45:00Z"),
+      total: 21.76,
+      status: "Delivered",
+      items: [
+        { ...products[1], quantity: 2 },
+        { ...products[5], quantity: 1 },
+      ],
+    },
+     {
+      id: "ORD005",
       customerName: "User",
       date: new Date(),
-      total: 8.88,
+      total: 19.45,
       status: "Pending",
-      items: [{...products[7], quantity: 2}],
-  }
+      items: [
+        { ...products[0], quantity: 1 },
+        { ...products[1], quantity: 1 },
+        { ...products[2], quantity: 1 },
+        { ...products[3], quantity: 1 },
+       ],
+    },
+    {
+      id: "ORD006",
+      customerName: "Bob Williams",
+      date: new Date("2024-03-10T11:00:00Z"),
+      total: 12.57,
+      status: "Delivered",
+      items: [
+        { ...products[5], quantity: 1 },
+        { ...products[6], quantity: 1 },
+      ],
+    },
 ];
 
 // Function to add a new order
