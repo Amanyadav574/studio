@@ -1,7 +1,7 @@
 "use client";
 
 import Link from 'next/link';
-import { ShoppingCart, User, LogOut } from 'lucide-react';
+import { ShoppingCart, User, LogOut, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
@@ -34,6 +34,14 @@ export function Header() {
             <Skeleton className="h-8 w-24" />
           ) : currentUser ? (
             <>
+              {currentUser.role === 'admin' && (
+                 <Button variant="ghost" asChild className="rounded-none">
+                    <Link href="/admin">
+                      <Shield />
+                      <span className="sr-only">Admin Dashboard</span>
+                    </Link>
+                  </Button>
+              )}
               <span className="font-semibold">{currentUser.name}</span>
               <Button variant="ghost" size="icon" onClick={logout} className="rounded-none">
                 <LogOut />
