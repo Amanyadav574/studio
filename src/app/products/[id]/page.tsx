@@ -64,23 +64,23 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
             <p className="my-4 text-4xl font-bold">${product.price.toFixed(2)}</p>
             <p className="text-lg leading-relaxed">{product.description}</p>
             
-            <div className="mt-8 flex items-center gap-4">
+            <div className="mt-8 flex flex-col sm:flex-row items-center gap-4">
               <div className="flex items-center">
-                  <Button size="icon" variant="outline" className="h-12 w-12 border-2 border-foreground" onClick={() => handleQuantityChange(-1)}>
+                  <Button size="icon" variant="outline" className="h-12 w-12 border-2 border-foreground rounded-r-none" onClick={() => handleQuantityChange(-1)}>
                       <Minus />
                   </Button>
                   <Input
                       type="number"
                       value={quantity}
                       onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
-                      className="h-12 w-20 border-y-2 border-x-0 border-foreground text-center text-lg font-bold"
+                      className="h-12 w-20 border-y-2 border-x-0 border-foreground text-center text-lg font-bold rounded-none"
                       aria-label={`Quantity for ${product.name}`}
                   />
-                  <Button size="icon" variant="outline" className="h-12 w-12 border-2 border-foreground" onClick={() => handleQuantityChange(1)}>
+                  <Button size="icon" variant="outline" className="h-12 w-12 border-2 border-foreground rounded-l-none" onClick={() => handleQuantityChange(1)}>
                       <Plus />
                   </Button>
               </div>
-              <Button onClick={handleAddToCart} size="lg" className="flex-1 text-lg font-bold bg-primary text-primary-foreground hover:bg-primary/90 h-12">
+              <Button onClick={handleAddToCart} size="lg" className="w-full sm:w-auto flex-1 text-lg font-bold bg-primary text-primary-foreground hover:bg-primary/90 h-12">
                 <ShoppingCart className="mr-2" /> Add to Cart
               </Button>
             </div>
