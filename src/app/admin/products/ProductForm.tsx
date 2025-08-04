@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useForm } from "react-hook-form";
@@ -12,8 +13,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent } from "@/components/ui/card";
 import { generateImage } from "@/ai/flows/generate-image";
-import { useState } from "react";
-import { Loader2, Sparkles } from "lucide-react";
+import { useState, useRef } from "react";
+import { Loader2, Sparkles, Upload } from "lucide-react";
 import Image from "next/image";
 
 const productSchema = z.object({
@@ -31,6 +32,7 @@ export function ProductForm({ product }: ProductFormProps) {
   const router = useRouter();
   const { toast } = useToast();
   const [isGenerating, setIsGenerating] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   
   const form = useForm<z.infer<typeof productSchema>>({
     resolver: zodResolver(productSchema),
@@ -82,6 +84,22 @@ export function ProductForm({ product }: ProductFormProps) {
       setIsGenerating(false);
     }
   };
+  
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const result = reader.result as string;
+        form.setValue("image", result, { shouldValidate: true });
+        toast({
+          title: "Image Uploaded!",
+          description: "The image has been added to the form.",
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const imageUrl = form.watch("image");
 
@@ -129,16 +147,27 @@ export function ProductForm({ product }: ProductFormProps) {
                 </FormItem>
               )}
             />
-            <FormField
+             <FormField
               control={form.control}
               name="image"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Image URL</FormLabel>
-                   <div className="flex items-center gap-2">
+                  <FormLabel>Image</FormLabel>
+                  <div className="flex items-center gap-2">
                     <FormControl>
-                      <Input {...field} />
+                      <Input {...field} placeholder="Enter image URL or upload/generate one" />
                     </FormControl>
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      onChange={handleFileSelect}
+                      className="hidden"
+                      accept="image/*"
+                    />
+                    <Button type="button" variant="outline" onClick={() => fileInputRef.current?.click()}>
+                      <Upload />
+                      Upload
+                    </Button>
                     <Button type="button" variant="outline" onClick={handleGenerateImage} disabled={isGenerating}>
                       {isGenerating ? <Loader2 className="animate-spin" /> : <Sparkles />}
                       Generate
