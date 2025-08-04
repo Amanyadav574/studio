@@ -1,18 +1,21 @@
 
 "use client";
 
-import { notFound } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import { getProductById } from "@/lib/product-service";
 import { ProductForm } from "../../ProductForm";
 import type { Product } from "@/lib/types";
 import { useEffect, useState } from "react";
 
-export default function EditProductPage({ params }: { params: { id: string } }) {
+export default function EditProductPage() {
+  const params = useParams();
   const [product, setProduct] = useState<Product | null>(null);
+  const id = Array.isArray(params.id) ? params.id[0] : params.id;
 
   useEffect(() => {
+    if (!id) return;
     const fetchProduct = async () => {
-      const fetchedProduct = await getProductById(parseInt(params.id));
+      const fetchedProduct = await getProductById(parseInt(id));
       if (fetchedProduct) {
         setProduct(fetchedProduct);
       } else {
@@ -20,7 +23,7 @@ export default function EditProductPage({ params }: { params: { id: string } }) 
       }
     };
     fetchProduct();
-  }, [params.id]);
+  }, [id]);
 
 
   if (!product) {
