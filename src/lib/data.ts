@@ -66,6 +66,38 @@ export const products: Product[] = [
     image: 'https://placehold.co/600x600.png',
     dataAiHint: 'yogurt dairy',
   },
+  {
+    id: 9,
+    name: 'Organic Bananas',
+    price: 1.29,
+    description: 'A bunch of ripe, organic bananas. Naturally sweet and full of potassium.',
+    image: 'https://placehold.co/600x600.png',
+    dataAiHint: 'bananas fruit',
+  },
+  {
+    id: 10,
+    name: 'Almond Milk',
+    price: 3.49,
+    description: 'Half-gallon of unsweetened almond milk. A great dairy-free alternative.',
+    image: 'https://placehold.co/600x600.png',
+    dataAiHint: 'almond milk',
+  },
+  {
+    id: 11,
+    name: 'Dark Chocolate Bar',
+    price: 2.99,
+    description: '70% cacao dark chocolate bar. Rich and intense flavor.',
+    image: 'https://placehold.co/600x600.png',
+    dataAiHint: 'dark chocolate',
+  },
+  {
+    id: 12,
+    name: 'Ground Coffee',
+    price: 12.99,
+    description: '12oz bag of medium-roast ground coffee. Ethically sourced Arabica beans.',
+    image: 'https://placehold.co/600x600.png',
+    dataAiHint: 'coffee beans',
+  },
 ];
 
 export const users: User[] = [
@@ -104,6 +136,20 @@ export const users: User[] = [
     password: 'password',
     role: 'user',
   },
+  {
+    id: 6,
+    name: 'Diana Prince',
+    email: 'diana@example.com',
+    password: 'password',
+    role: 'user',
+  },
+  {
+    id: 7,
+    name: 'Evan Davis',
+    email: 'evan@example.com',
+    password: 'password',
+    role: 'user',
+  }
 ];
 
 export let orders: Order[] = [
@@ -111,19 +157,19 @@ export let orders: Order[] = [
       id: "ORD001",
       customerName: "Alice Johnson",
       date: new Date("2024-05-20T10:30:00Z"),
-      total: 34.72,
+      total: 13.97,
       status: "Delivered",
       items: [
-        { ...products[0], quantity: 2 },
+        { ...products[0], quantity: 1 },
+        { ...products[1], quantity: 1 },
         { ...products[2], quantity: 1 },
-        { ...products[4], quantity: 3 },
       ],
     },
     {
       id: "ORD002",
       customerName: "Bob Williams",
       date: new Date("2024-05-21T14:00:00Z"),
-      total: 14.56,
+      total: 8.28,
       status: "Pending",
       items: [
         { ...products[1], quantity: 1 },
@@ -134,7 +180,7 @@ export let orders: Order[] = [
       id: "ORD003",
       customerName: "Charlie Brown",
       date: new Date("2024-04-15T09:12:00Z"),
-      total: 8.88,
+      total: 7.78,
       status: "Delivered",
       items: [{...products[7], quantity: 2}],
     },
@@ -142,7 +188,7 @@ export let orders: Order[] = [
       id: "ORD004",
       customerName: "Alice Johnson",
       date: new Date("2024-04-28T18:45:00Z"),
-      total: 21.76,
+      total: 17.27,
       status: "Delivered",
       items: [
         { ...products[1], quantity: 2 },
@@ -152,26 +198,114 @@ export let orders: Order[] = [
      {
       id: "ORD005",
       customerName: "User",
-      date: new Date(),
-      total: 19.45,
+      date: new Date("2024-05-22T11:00:00Z"),
+      total: 19.26,
       status: "Pending",
       items: [
         { ...products[0], quantity: 1 },
-        { ...products[1], quantity: 1 },
-        { ...products[2], quantity: 1 },
-        { ...products[3], quantity: 1 },
+        { ...products[4], quantity: 2 },
+        { ...products[8], quantity: 1 },
+        { ...products[10], quantity: 3 },
        ],
     },
     {
       id: "ORD006",
       customerName: "Bob Williams",
       date: new Date("2024-03-10T11:00:00Z"),
-      total: 12.57,
+      total: 8.78,
       status: "Delivered",
       items: [
         { ...products[5], quantity: 1 },
         { ...products[6], quantity: 1 },
       ],
+    },
+    {
+      id: "ORD007",
+      customerName: "Diana Prince",
+      date: new Date("2024-05-18T12:30:00Z"),
+      total: 21.46,
+      status: "Delivered",
+      items: [
+        { ...products[11], quantity: 1 },
+        { ...products[3], quantity: 1 },
+        { ...products[9], quantity: 1 },
+      ],
+    },
+    {
+      id: "ORD008",
+      customerName: "Evan Davis",
+      date: new Date("2024-05-19T08:20:00Z"),
+      total: 10.26,
+      status: "Pending",
+      items: [
+        { ...products[1], quantity: 1 },
+        { ...products[4], quantity: 2 },
+      ],
+    },
+    {
+      id: "ORD009",
+      customerName: "Alice Johnson",
+      date: new Date("2024-03-05T16:50:00Z"),
+      total: 4.28,
+      status: "Delivered",
+      items: [
+        { ...products[8], quantity: 1 },
+        { ...products[10], quantity: 1 },
+      ],
+    },
+    {
+      id: "ORD010",
+      customerName: "Charlie Brown",
+      date: new Date("2024-02-20T13:00:00Z"),
+      total: 16.48,
+      status: "Delivered",
+      items: [
+          { ...products[11], quantity: 1 },
+          { ...products[9], quantity: 1 },
+      ]
+    },
+    {
+      id: "ORD011",
+      customerName: "Diana Prince",
+      date: new Date("2024-05-01T09:00:00Z"),
+      total: 15.96,
+      status: "Delivered",
+      items: [
+        { ...products[0], quantity: 4 },
+      ]
+    },
+    {
+      id: "ORD012",
+      customerName: "Bob Williams",
+      date: new Date("2024-05-15T18:00:00Z"),
+      total: 4.98,
+      status: "Pending",
+      items: [
+        { ...products[2], quantity: 1 },
+      ]
+    },
+     {
+      id: "ORD013",
+      customerName: "Evan Davis",
+      date: new Date("2024-02-11T10:10:00Z"),
+      total: 14.76,
+      status: "Delivered",
+      items: [
+        { ...products[6], quantity: 2 },
+        { ...products[7], quantity: 2 },
+      ]
+    },
+     {
+      id: "ORD014",
+      customerName: "User",
+      date: new Date("2024-01-29T19:25:00Z"),
+      total: 21.25,
+      status: "Delivered",
+      items: [
+        { ...products[1], quantity: 1 },
+        { ...products[11], quantity: 1 },
+        { ...products[8], quantity: 1 },
+      ]
     },
 ];
 
