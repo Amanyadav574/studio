@@ -1,0 +1,68 @@
+import type { Product } from '@/lib/types';
+
+export const products: Product[] = [
+  {
+    id: 1,
+    name: 'Organic Apples',
+    price: 3.99,
+    description: 'Crisp, juicy, and certified organic Gala apples. Perfect for snacking or baking. Sourced from local orchards.',
+    image: 'https://placehold.co/600x600.png',
+    dataAiHint: 'apples fruit',
+  },
+  {
+    id: 2,
+    name: 'Sourdough Bread',
+    price: 5.49,
+    description: 'Artisanal sourdough loaf with a chewy crust and soft interior. Baked fresh daily. Contains wheat and gluten.',
+    image: 'https://placehold.co/600x600.png',
+    dataAiHint: 'sourdough bread',
+  },
+  {
+    id: 3,
+    name: 'Free-Range Eggs',
+    price: 4.99,
+    description: 'One dozen large brown eggs from free-range chickens. Rich yolks and excellent for all your cooking needs.',
+    image: 'https://placehold.co/600x600.png',
+    dataAiHint: 'eggs breakfast',
+  },
+  {
+    id: 4,
+    name: 'Whole Milk',
+    price: 2.79,
+    description: 'Gallon of fresh whole milk, pasteurized and vitamin D fortified. Great for cereals, coffee, or just a cold glass.',
+    image: 'https://placehold.co/600x600.png',
+    dataAiHint: 'milk dairy',
+  },
+  {
+    id: 5,
+    name: 'Avocado',
+    price: 1.99,
+    description: 'Single large Hass avocado. Creamy, delicious, and packed with healthy fats. Ready to be made into guacamole or sliced on toast.',
+    image: 'https://placehold.co/600x600.png',
+    dataAiHint: 'avocado fruit',
+  },
+  {
+    id: 6,
+    name: 'Cheddar Cheese',
+    price: 6.29,
+    description: '8oz block of sharp cheddar cheese. Aged for 9 months for a rich, tangy flavor. Perfect for sandwiches or a cheese board.',
+    image: 'https://placehold.co/600x600.png',
+    dataAiHint: 'cheddar cheese',
+  },
+  {
+    id: 7,
+    name: 'Baby Carrots',
+    price: 2.49,
+    description: '1lb bag of peeled baby carrots. A convenient and healthy snack for all ages. Great for dipping.',
+    image: 'https://placehold.co/600x600.png',
+    dataAiHint: 'carrots vegetable',
+  },
+  {
+    id: 8,
+    name: 'Greek Yogurt',
+    price: 3.89,
+    description: '32oz container of plain Greek yogurt. Thick, creamy, and high in protein. An excellent base for breakfast bowls.',
+    image: 'https://placehold.co/600x600.png',
+    dataAiHint: 'yogurt dairy',
+  },
+];
