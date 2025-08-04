@@ -79,7 +79,7 @@ export default function AdminLayout({
         </SidebarContent>
         <SidebarFooter />
       </Sidebar>
-      <SidebarInset className="pt-16">{children}</SidebarInset>
+      <SidebarInset className="pt-20">{children}</SidebarInset>
     </SidebarProvider>
   )
 }
