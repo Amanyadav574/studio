@@ -11,7 +11,7 @@ export default function WishlistPage() {
 
   if (wishlistItems.length === 0) {
     return (
-      <div className="text-center">
+      <div className="container mx-auto px-4 py-8 text-center">
         <h1 className="mb-4 text-4xl font-black font-headline uppercase">Your Wishlist is Empty</h1>
         <Heart className="mx-auto h-24 w-24 text-muted-foreground" />
         <p className="mt-4 text-lg">Looks like you haven't liked any items yet.</p>
@@ -23,7 +23,7 @@ export default function WishlistPage() {
   }
 
   return (
-    <div>
+    <div className="container mx-auto px-4 py-8">
       <h1 className="mb-8 text-4xl font-black font-headline uppercase">Your Wishlist</h1>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {wishlistItems.map(product => (

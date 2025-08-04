@@ -3,7 +3,7 @@ import { ProductCard } from '@/components/ProductCard';
 
 export default function HomePage() {
   return (
-    <div>
+    <div className="container mx-auto px-4 py-8">
       <h1 className="mb-8 text-5xl font-black font-headline uppercase tracking-wider text-center md:text-left">
         All Products
       </h1>
