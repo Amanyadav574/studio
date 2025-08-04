@@ -4,7 +4,6 @@ import {
   LayoutDashboard,
   Package,
   ShoppingCart,
-  Users,
 } from "lucide-react"
 import { useAuth } from "@/context/AuthContext"
 import { useRouter } from "next/navigation"
@@ -18,8 +17,6 @@ import {
   SidebarMenuButton,
   SidebarInset,
   SidebarTrigger,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
   SidebarFooter,
 } from "@/components/ui/sidebar"
 import Link from "next/link"
@@ -52,26 +49,26 @@ export default function AdminLayout({
         <SidebarContent>
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton asChild isActive={pathname === '/admin'}>
+              <SidebarMenuButton asChild isActive={pathname === '/admin'} tooltip="Dashboard">
                 <Link href="/admin">
                   <LayoutDashboard />
-                  Dashboard
+                  <span>Dashboard</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={pathname.startsWith('/admin/orders')}>
+                <SidebarMenuButton asChild isActive={pathname.startsWith('/admin/orders')} tooltip="Orders">
                     <Link href="/admin/orders">
                         <ShoppingCart />
-                        Orders
+                        <span>Orders</span>
                     </Link>
                 </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
-              <SidebarMenuButton asChild isActive={pathname.startsWith('/admin/products')}>
+              <SidebarMenuButton asChild isActive={pathname.startsWith('/admin/products')} tooltip="Products">
                 <Link href="/admin/products">
                   <Package />
-                  Products
+                  <span>Products</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
