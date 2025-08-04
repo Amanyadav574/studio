@@ -4,6 +4,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { CartProvider } from '@/context/CartContext';
 import { AuthProvider } from '@/context/AuthContext';
 import { Header } from '@/components/Header';
+import { WishlistProvider } from '@/context/WishlistContext';
 
 export const metadata: Metadata = {
   title: 'Raw Commerce',
@@ -24,17 +25,19 @@ export default function RootLayout({
       </head>
       <body className="font-body antialiased">
         <AuthProvider>
-          <CartProvider>
-            <div className="flex min-h-screen flex-col">
-              <Header />
-              <main className="flex-1">
-                <div className="container mx-auto px-4 py-8">
-                  {children}
-                </div>
-              </main>
-            </div>
-            <Toaster />
-          </CartProvider>
+          <WishlistProvider>
+            <CartProvider>
+              <div className="flex min-h-screen flex-col">
+                <Header />
+                <main className="flex-1">
+                  <div className="container mx-auto px-4 py-8">
+                    {children}
+                  </div>
+                </main>
+              </div>
+              <Toaster />
+            </CartProvider>
+          </WishlistProvider>
         </AuthProvider>
       </body>
     </html>

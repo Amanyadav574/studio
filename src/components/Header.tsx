@@ -1,16 +1,19 @@
 "use client";
 
 import Link from 'next/link';
-import { ShoppingCart, User, LogOut, Shield } from 'lucide-react';
+import { ShoppingCart, User, LogOut, Shield, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
 import { Skeleton } from './ui/skeleton';
+import { useWishlist } from '@/context/WishlistContext';
 
 export function Header() {
   const { getCartItemCount } = useCart();
+  const { wishlistItems } = useWishlist();
   const { currentUser, logout, loading } = useAuth();
   const itemCount = getCartItemCount();
+  const wishlistItemCount = wishlistItems.length;
 
   return (
     <header className="bg-card/80 backdrop-blur-sm sticky top-0 z-40 border-b-2 border-foreground">
@@ -19,6 +22,17 @@ export function Header() {
           Raw Commerce
         </Link>
         <nav className="flex items-center gap-4">
+          <Button variant="ghost" asChild className="rounded-none">
+            <Link href="/wishlist" className="relative">
+              <Heart />
+              {wishlistItemCount > 0 && (
+                <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-accent text-xs text-accent-foreground">
+                  {wishlistItemCount}
+                </span>
+              )}
+              <span className="sr-only">Wishlist</span>
+            </Link>
+          </Button>
           <Button variant="ghost" asChild className="rounded-none">
             <Link href="/cart" className="relative">
               <ShoppingCart />
