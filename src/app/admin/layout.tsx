@@ -45,7 +45,7 @@ export default function AdminLayout({
 
   return (
     <SidebarProvider>
-      <Sidebar>
+      <Sidebar className="pt-16">
         <SidebarHeader>
           <SidebarTrigger />
         </SidebarHeader>
